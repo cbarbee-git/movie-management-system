@@ -25,7 +25,7 @@ This project also has key elements of CRUD (Create, Read, Update, Delete) and RD
 
 The Movie Management System (MMS) consists of a single front-end page to display various movie data. This is done with pagination and a search tool to filter content.
 
-MMS also contain an 'admin' portion to manange and maniplute movie data. This section is keep under the admin folder and is protected from public view. A user would need to login to access the content here.
+MMS also contains an 'admin' portion to manange and maniplute movie data. This section is keep under the admin folder and is protected from public view. A user would need to login to access the content here.
 
 ## Getting Started
 
@@ -45,6 +45,6 @@ MMS also contain an 'admin' portion to manange and maniplute movie data. This se
 Author
 
 Chad Barbee  
-LinkedIn: (https://www.linkedin.com/in/chad-barbee-937217250/)
+LinkedIn: (https://www.linkedin.com/in/chad-barbee-937217250/)<br />
 My Site: (https://www.chadbarbee.com)
 
