@@ -1,4 +1,17 @@
+<?php
+if(!empty($_POST)){
+    include_once "UserController.php";
+    $user_controller = new UserController();
+    $user_controller->login($_POST['username'],$_POST['password']);
+}
 
+if(isset($_GET['action']) && $_GET['action'] == 'logout'){
+    include_once "Session.php";
+    appSession::start();
+    appSession::destroy('active_user');
+}
+?>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,22 +127,5 @@
         </div>
     </div>
 </div>
-<?php
-if(!empty($_POST)){
-    echo('<h1>POSTING</h1>');
-    include_once "UserController.php";
-
-
-    $user_controller = new UserController();
-
-    $user_controller->login($_POST['username'],$_POST['password']);
-
-}
-
-if(isset($_GET['action']) && $_GET['action'] == 'logout'){
-    include_once "Session.php";
-    appSession::start();
-    appSession::destroy('active_user');
-}
-?>
 </body>
+</html>
