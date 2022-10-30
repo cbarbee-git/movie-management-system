@@ -1,0 +1,6 @@
+.env
+test.php
+#Ignore .idea files
+/.idea
+.DS_Store
+images/movie_covers/movie_*
