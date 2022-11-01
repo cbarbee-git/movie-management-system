@@ -261,10 +261,11 @@ class MoviesController {
             //check if a new file was added to the form
             $types = ['cover', 'hero'];
             foreach ($types as $type) {
+                //delete the previous
+                $this->crud->delete("DELETE FROM images where img_ref_movie = :movie_id and type=:type", ['movie_id' => $movie_id, 'type' => $type], 'query');
+                //DON'T allow for empty string, to try and write a new img path
                 if (!empty($_FILES[$type . '_image']['name'])) {
-                    //delete the previous
-                    $this->crud->delete("DELETE FROM images where img_ref_movie = :movie_id and type=:type", ['movie_id' => $movie_id, 'type' => $type], 'query');
-                    //add the new file
+                   //add the new file
                     $this->saveAndUploadCoverImage($movie_id, $type);
                 }
             }
