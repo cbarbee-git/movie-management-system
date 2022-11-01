@@ -40,7 +40,7 @@ class MoviesController {
 
             $movie_genres = (isset($_POST['genres'])) ? $_POST['genres'] : '';
             $this->createMovieGenre($movie_genres, $movie_id);
-            if(isset($_POST['rating_id'])){
+            if(isset($_POST['rating_id']) && $_POST['rating_id'] != ''){
                 $this->createMovieRating($_POST['rating_id'], $movie_id);
             }
             $this->saveAndUploadCoverImage($movie_id);
@@ -230,6 +230,7 @@ class MoviesController {
             //this sets a default value if one is not passed                                    //cast correct datatype
             'mv_featured' => ((isset($params['mv_featured']) && $params['mv_featured'] != '') ? (int)$params['mv_featured'] : 0),
             'mv_synopsis' => $params['mv_synopsis'],
+            'rating_id' => $params['rating_id'],
             'genres' => $params['genres']
         ];
 
@@ -248,14 +249,14 @@ class MoviesController {
 
             //go get the movieID
             $movie_id = $this->crud->read("Select mv_id FROM movies where mv_guid = :mv_guid", ['mv_guid' => $movie_guid] , 'column');
-
             //TODO: make this build a dynamic update statement for future parameters
             //$sql = foreach($param)....
             $this->crud->update("UPDATE movies set mv_title = :mv_title, mv_year_released = :mv_year_released, mv_synopsis = :mv_synopsis, mv_featured = :mv_featured WHERE mv_guid = :mv_guid", $movie_data, 'query');
             $this->createMovieGenre($movie_data['genres'], $movie_id);
-            $this->createMovieRating($params['rating_id'], $movie_id);
+            if(isset($movie_data['rating_id']) && $movie_data['rating_id'] != ''){
+                $this->createMovieRating($movie_data['rating_id'], $movie_id);
+            }
             $this->deleteDeselectedGenres($movie_id);
-
             //upload movie image
             //check if a new file was added to the form
             $types = ['cover', 'hero'];
@@ -302,7 +303,7 @@ class MoviesController {
             $genre_id = $genre['mvg_ref_genre'];
             if(!in_array($genre_id,$_POST['genres'])){
                 //item should be deleted, it has been removed from the form.
-                $this->crud->delete('DELETE FROM mv_genres WHERE mvg_ref_genre = :genre_id',['genre_id' => $genre_id],'query');
+                $this->crud->delete('DELETE FROM mv_genres WHERE mvg_ref_genre = :mvg_ref_genre and mvg_ref_movie = :mvg_ref_movie',['mvg_ref_genre' => $genre_id, 'mvg_ref_movie' => $movie_id],'query');
             }
         }
     }
@@ -317,7 +318,7 @@ class MoviesController {
         $dir .= basename($_FILES[$type.'_image']['name']);
         //TODO: Display an Error if file move fails
         //use this function to place the file
-       if(!move_uploaded_file($_FILES[ $type.'_image']['tmp_name'],$dir )) {
+        if(!move_uploaded_file($_FILES[ $type.'_image']['tmp_name'],$dir )) {
             die('ERROR MOVING FILE');
         }
         //add the params to an array
@@ -328,8 +329,6 @@ class MoviesController {
         ];
         //now add the new data to the DB
         $this->crud->create($img_info,'images');
-
-
     }
 
     public function deleteMovie($movie_guid){
