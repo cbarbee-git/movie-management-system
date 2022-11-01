@@ -87,18 +87,22 @@
     function readURL(input,selector) {
         //use this to decide which remove button to add back
         if(selector == "customFileInput"){
-            selector_img_remove = "#cover-x";
+            selector_img_container = "cover";
         }else{
             //hero remover
-            selector_img_remove = "#hero-x";
+            selector_img_container = "hero";
         }
+        selector_img_remove = "#" + selector_img_container + '-x';
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#' + selector + '-img').attr('src', e.target.result);//e.target.result);
+                $('#' + selector + '-img').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
-            $("#" + selector + "-img").show();
+            console.log("#" + selector_img_container + "-img-input-container .image-container");
+            $("#" + selector_img_container + "-img-input-container .image-container").removeClass('hidden');
+            $("#" + selector_img_container + "-img-input-container .image-container img").removeClass('hidden').addClass('test');
+            $("#" + selector_img_container + "-img-input-container .image-container img").css("display","block");
             $(selector_img_remove).show();
         }
     }

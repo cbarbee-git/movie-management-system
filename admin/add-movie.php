@@ -100,32 +100,25 @@ if(strtolower($action) == 'edit'){
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="year">Cover Image:</label>
                                         <div id="cover-img-input-container" class="col-sm-10">
-                                            <?php
-                                            if(isset($movie['img_path'])) {
+                                                <?php
+                                                $hide_cover = (!isset($movie['img_path'])) ? "hidden" : "";
                                                 ?>
-                                                <div class="image-container">
+                                                <div class="image-container <?=$hide_cover?>">
                                                     <button type="button" id="cover-x" class="x" title="Remove Cover Image">X</button>
                                                     <?php
-                                                    echo("<img id='customFileInput-img' src='../".$movie['img_path']."' alt='' width='194' height='259' style='margin-bottom:10px;' />");
+                                                    echo("<img class='".$hide_cover."' id='customFileInput-img' src='../".$movie['img_path']."' alt='' width='194' height='259' style='margin-bottom:10px;' />");
                                                     //now use a different input group
                                                     ?>
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
-                                                        <input type="file" name="cover_image" class="custom-file-input hidden" id="customFileInput" aria-describedby="customFileInput">
-                                                        <label class="custom-file-label" for="customFileInput">Replace existing cover file:</label>
+                                                        <input type="file" name="cover_image" class="custom-file-input form-control <?= isset($movie['img_path']) ? 'hidden' : '' ?>" id="customFileInput" aria-describedby="customFileInput">
+                                                        <label class="custom-file-label <?=$hide_cover?>" for="customFileInput">Replace existing cover file:</label>
                                                     </div>
-                                                    <div class="input-group-append">
+                                                    <div class="input-group-append <?=$hide_cover?>">
                                                         <button id="movie-cover-upload-button" class="btn btn-primary cursor-pointer" type="button" id="customFileInput">Upload new cover</button>
                                                     </div>
                                                 </div>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                <input type="file" name="cover_image" class="form-control" id="customFileInput" value="">
-                                                <?php
-                                            }
-                                            ?>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -134,31 +127,24 @@ if(strtolower($action) == 'edit'){
                                         <label class="control-label col-sm-2" for="year">Hero Image: <br /><small>(home carousel)</small></label>
                                         <div id="hero-img-input-container" class="col-sm-10">
                                             <?php
-                                            if(isset($movie['hero_path'])){
-                                                ?>
-                                                <div class="image-container">
+                                            $hide_cover = (!isset($movie['hero_path'])) ? "hidden" : "";
+                                            ?>
+                                                <div class="image-container <?= $hide_cover ?>">
                                                     <button type="button" id="hero-x" class="x" title="Remove Cover Image">X</button>
                                                     <?php
-                                                    echo("<img id='customFileHeroInput-img' src='../".$movie['hero_path']."' alt='' style='margin-bottom:10px;max-height:200px;' />"); // style='margin-bottom:10px;width:40%;height:40%;' />");
+                                                    echo("<img class='".$hide_cover."' id='customFileHeroInput-img' src='../".$movie['hero_path']."' alt='' style='margin-bottom:10px;max-height:200px;' />");
                                                     //now use a different input group
                                                     ?>
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
-                                                        <input type="file" name="hero_image" class="custom-file-input hidden" id="customFileHeroInput" aria-describedby="customFileInput">
-                                                        <label class="custom-file-label" for="customFileHeroInput">Replace existing hero file:</label>
+                                                        <input type="file" name="hero_image" class="custom-file-input form-control <?= isset($movie['hero_path']) ? 'hidden' : '' ?>" id="customFileHeroInput" aria-describedby="customFileInput">
+                                                        <label class="custom-file-label <?=$hide_cover?>" for="customFileHeroInput">Replace existing hero file:</label>
                                                     </div>
-                                                    <div class="input-group-append">
+                                                    <div class="input-group-append <?=$hide_cover?>">
                                                         <button id="movie-hero-upload-button" class="btn btn-primary cursor-pointer" type="button" id="customFileHeroInput">Upload new hero image</button>
                                                     </div>
                                                 </div>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                <input type="file" name="hero_image" class="form-control" id="customFileHeroInput" value="">
-                                                <?php
-                                            }
-                                            ?>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
