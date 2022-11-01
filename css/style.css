@@ -537,7 +537,18 @@ nav a{
 #search-movies:focus::placeholder {
     color: transparent;
 }
-
+.image-container {width:fit-content;}
+.x {
+    position: relative;
+    float: right;
+    background: rgb(0, 0, 0);
+    color: white;
+    top: -12px;
+    right: 10px;
+    border-radius: 50%;
+    opacity: 80%;
+    font-size: 10px;
+}
 @media (min-width: 1600px){
     #main-container{
         max-width: 1400px;

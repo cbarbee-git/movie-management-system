@@ -53,6 +53,7 @@
         $('input[type="checkbox"][name="mv_featured"]').attr("checked", !$('input[type="checkbox"][name="mv_featured"]').attr("checked"));
 
     });
+    //TODO:this reused code could be optimized
     $("#movie-cover-upload-button").on('click', function (){
         $("#customFileInput").click();
         $("#customFileInput").removeClass('hidden');
@@ -60,6 +61,50 @@
     $("#movie-hero-upload-button").on('click', function (){
         $("#customFileHeroInput").click();
         $("#customFileHeroInput").removeClass('hidden');
+    });
+    //
+    $("#cover-x, #hero-x").on('click', function (event){
+        if($(this).attr('id') == 'cover-x'){
+            selector = "#customFileInput";
+            selector_img_container = "#cover-img-input-container";
+        }else{
+            //hero-x
+            selector = "#customFileHeroInput";
+            selector_img_container = "#hero-img-input-container";
+        }
+        //hide the 'remove' button
+        $(this).hide();
+        //now the current file & image need to be removed
+        $(selector).val('');
+        $(selector + "-img").hide('slow');
+        $(selector + "-img").attr('src','');
+        $(selector).removeClass('hidden');
+        //now hide the button and label for image replacement
+        $(selector_img_container + " .custom-file-label, " + selector_img_container + " .input-group-append").hide();
+    });
+
+
+    function readURL(input,selector) {
+        //use this to decide which remove button to add back
+        if(selector == "customFileInput"){
+            selector_img_remove = "#cover-x";
+        }else{
+            //hero remover
+            selector_img_remove = "#hero-x";
+        }
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#' + selector + '-img').attr('src', e.target.result);//e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            $("#" + selector + "-img").show();
+            $(selector_img_remove).show();
+        }
+    }
+
+    $("#customFileInput , #customFileHeroInput").change(function(){
+        readURL(this,$(this).attr('id'));
     });
 </script>
 </body>
