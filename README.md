@@ -10,7 +10,7 @@
   <p align="center">
     You can view a demo of this project currently running on my site:
     <br />
-    <a href="https://www.chabarbee.com/resume/movie-management-project/" target="_blank">View Demo</a>
+    <a href="https://chadbarbee.com/resume/movie-management-system/" target="_blank">View Demo</a>
   </p>
 </div>
 
